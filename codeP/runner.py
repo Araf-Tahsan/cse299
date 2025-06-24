@@ -1,4 +1,19 @@
+import torchvision
+import torchvision.utils as vutils
+from models import get_model
+from datasets import get_dataset
+import os
+
 def run_pipeline(model_name, dataset_name, options_name=None):
     # This will run in main.py
-    print(model_name, dataset_name, options_name)
+    if model_name == "gan":
+        gan = get_model(model_name)
+        dataloader = get_dataset(dataset_name)
+        gan.train(dataloader, num_epochs=5)
+        samples = gan.generate_samples(16)
+        results_dir = os.path.join("RESULTS", "gan")
+        os.makedirs(results_dir, exist_ok=True)
+        save_path = os.path.join(results_dir, "gan_generated_samples.png")
+        vutils.save_image(samples, save_path, normalize=True)
+    
     return

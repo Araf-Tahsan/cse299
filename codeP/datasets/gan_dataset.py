@@ -1,0 +1,15 @@
+import torchvision
+import torchvision.transforms as transforms
+
+def load_data():
+    path = "../DATA/gan_dataset/training/data"
+    transform = transforms.Compose([
+        transforms.Resize(64),
+        transforms.CenterCrop(64),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    ])
+    dataset = torchvision.datasets.CIFAR10(root='../DATA/gan_dataset/training/data', train=True, download=False, transform=transform)
+    dataloader = DataLoader(dataset, batch_size=128, shuffle=True, num_workers=2)
+    return dataloader
+
