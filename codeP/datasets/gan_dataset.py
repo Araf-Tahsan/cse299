@@ -1,5 +1,6 @@
 import torchvision
 import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
 
 def load_data():
     path = "../DATA/gan_dataset/training/data"
@@ -9,7 +10,7 @@ def load_data():
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
-    dataset = torchvision.datasets.CIFAR10(root='../DATA/gan_dataset/training/data', train=True, download=False, transform=transform)
+    dataset = torchvision.datasets.CIFAR10(root='../DATA/gan_dataset/training/data', train=True, download=True, transform=transform)
     dataloader = DataLoader(dataset, batch_size=128, shuffle=True, num_workers=2)
     return dataloader
 

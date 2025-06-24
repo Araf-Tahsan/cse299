@@ -8,4 +8,5 @@ parser.add_argument('--otherOptions', required=False, default=None)
 
 args = parser.parse_args()
 
-run_pipeline(args.model, args.dataset, args.otherOptions)
+if name == "main":
+    run_pipeline(args.model, args.dataset, args.otherOptions)
