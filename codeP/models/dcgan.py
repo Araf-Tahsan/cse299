@@ -1,12 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torchvision
-import torchvision.transforms as transforms
 import torchvision.utils as vutils
 import numpy as np
-from torch.utils.data import DataLoader
-from IPython.display import Image, display
 
 torch.manual_seed(42)
 np.random.seed(42)
@@ -64,7 +60,7 @@ def weights_init(m):
         nn.init.normal_(m.weight.data, 1.0, 0.02)
         nn.init.constant_(m.bias.data, 0)
 
-class GAN:
+class DCGAN:
     def __init__(self, nz=100, lr=0.0002, beta1=0.5, device='cuda' if torch.cuda.is_available() else 'cpu'):
         self.device = device
         self.nz = nz
@@ -129,13 +125,3 @@ class GAN:
         with torch.no_grad():
             noise = torch.randn(num_samples, self.nz, 1, 1, device=self.device)
             return self.generator(noise).detach().cpu()
-
-    def plot_losses(self):
-        plt.figure(figsize=(10, 5))
-        plt.title("Generator and Discriminator Loss During Training")
-        plt.plot(self.G_losses, label="G")
-        plt.plot(self.D_losses, label="D")
-        plt.xlabel("Iterations")
-        plt.ylabel("Loss")
-        plt.legend()
-        plt.show()
